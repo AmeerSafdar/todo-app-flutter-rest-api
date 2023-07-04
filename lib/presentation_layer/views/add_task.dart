@@ -2,11 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:fluttertodoapi/helper/constant/string_helper.dart';
+import 'package:fluttertodoapi/helper/extension/validation_helper.dart';
 import 'package:fluttertodoapi/presentation_layer/widgets/text_widget.dart';
 
 import '../../bloc/get_data_bloc/fetch_data_bloc.dart';
 import '../../bloc/get_data_bloc/fetch_data_event.dart';
+import '../widgets/sizedBox.dart';
 import '../widgets/text_field.dart';
+import 'home_screen.dart';
 
 class AddTodoData extends StatefulWidget {
   FetchTodoBloc bloc;
@@ -34,16 +37,22 @@ class _AddTodoDataState extends State<AddTodoData> {
         child: Center(
             child: Column(
           children: [
+            SizeBoxWidget(),
             MyTextField(
               cntrl: titleCntrl,
               hint: 'Title',
+              validator: (v) =>
+                  '$v'.isRequired() ? null : StringHelper.VALIDITY,
             ),
-            const SizedBox(
+            SizedBox(
               height: 10,
             ),
             MyTextField(
               cntrl: descContrl,
+              maxLine: 3,
               hint: 'Description',
+              validator: (v) =>
+                  '$v'.isRequired() ? null : StringHelper.VALIDITY,
             ),
             const SizedBox(
               height: 10,
@@ -56,7 +65,13 @@ class _AddTodoDataState extends State<AddTodoData> {
                         description: descContrl.text, title: titleCntrl.text));
                     descContrl.text = '';
                     titleCntrl.text = '';
-                    Navigator.of(context).pop();
+                    // Navigator.of(context).pop();
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: ((context) => const HomeScreen()),
+                        ),
+                        (Route<dynamic> route) => false);
                   }
                 },
                 child: MyTextWidget(text: 'Submit '))

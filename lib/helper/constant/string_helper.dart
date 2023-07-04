@@ -7,4 +7,12 @@ class StringHelper {
   static String EDIT = "Edit";
   static String UPDATE = "Update";
   static String CANCEL = "Cancel";
+  static String LOGIN = "Login";
+  static String EMAIL = 'Email';
+  static String PASSWORD = 'Password';
+  static String NAME = 'Name';
+  static String USERNAME = 'Username';
+  static String VALIDITY = 'Enter a valid input';
+  static String RESET_PASSWORD = 'Reset Password';
+  static String FORGOT_PASSWORD = 'Forgot Password?';
 }

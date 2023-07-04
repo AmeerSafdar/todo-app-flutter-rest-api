@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:fluttertodoapi/helper/constant/string_helper.dart';
+import 'package:fluttertodoapi/helper/extension/validation_helper.dart';
 import 'package:fluttertodoapi/presentation_layer/widgets/text_widget.dart';
 
 import '../../presentation_layer/widgets/sizedBox.dart';
@@ -30,11 +31,15 @@ class DialogUtils {
                   MyTextField(
                     cntrl: titleUpdatecontroller..text = '$txt',
                     hint: '',
+                    validator: (v) =>
+                        '$v'.isRequired() ? null : StringHelper.VALIDITY,
                   ),
                   SizeBoxWidget(),
                   MyTextField(
                     cntrl: desCUpdatecontroller..text = '$description',
                     hint: '',
+                    validator: (v) =>
+                        '$v'.isRequired() ? null : StringHelper.VALIDITY,
                   ),
                   SizeBoxWidget(),
                   Row(

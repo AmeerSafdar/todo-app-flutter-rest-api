@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertodoapi/bloc/get_data_bloc/fetch_data_event.dart';
+import 'package:fluttertodoapi/bloc/login_methods_bloc.dart/login_bloc.dart';
+import 'package:fluttertodoapi/bloc/login_methods_bloc.dart/login_states.dart';
 import 'package:fluttertodoapi/helper/constant/const.dart';
 import 'package:fluttertodoapi/helper/constant/dimensions.dart';
 import 'package:fluttertodoapi/helper/constant/string_helper.dart';
+import 'package:fluttertodoapi/presentation_layer/views/login_screen/loginScreen.dart';
 import 'package:fluttertodoapi/presentation_layer/widgets/text_widget.dart';
 
 import '../../bloc/get_data_bloc/fetch_data_bloc.dart';
 import '../../bloc/get_data_bloc/fetch_data_states.dart';
+import '../../bloc/login_methods_bloc.dart/login_events.dart';
+import '../../helper/constant/iconhelper.dart';
 import '../../helper/utils/dialogue_utils.dart';
 import '../../model/todos_model.dart';
 import 'add_task.dart';
@@ -25,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     firebaseMessaging.getToken().then((tokenDev) {
       token = tokenDev.toString();
-      print("token is $token");
+      debugPrint("token is: $token");
     });
     BlocProvider.of<FetchTodoBloc>(context).add(GetData());
   }
@@ -61,8 +66,34 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
               onPressed: () {
                 BlocProvider.of<FetchTodoBloc>(context).add(Notify());
+
+                // child: Container(),
+
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: ((context) => AddTodoData(
+                //               bloc: bloc,
+                //             ))));
               },
-              icon: Icon(Icons.notification_add))
+              icon: IconHelper.addIcon),
+          IconButton(
+              onPressed: () {
+                // BlocListener<LoginBloc, LoginStates>(
+                //   listener: (context, state) {
+                BlocProvider.of<LoginBloc>(context).add(
+                  LogoutEvents(cntxt: context),
+                  // },
+                  // child: Container(),
+                );
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: ((context) => LoginScreen()),
+                    ),
+                    (Route<dynamic> route) => false);
+              },
+              icon: IconHelper.logOut)
         ],
       ),
       body: SafeArea(child: BlocBuilder<FetchTodoBloc, FetchTodo>(

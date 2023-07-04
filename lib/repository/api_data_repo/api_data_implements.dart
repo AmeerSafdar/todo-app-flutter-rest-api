@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:fluttertodoapi/helper/constant/const.dart';
 import 'package:fluttertodoapi/model/todos_model.dart';
 import 'package:fluttertodoapi/repository/API/api.dart';
@@ -95,5 +96,31 @@ class TodosFetch {
     } catch (e) {
       print(e);
     }
+  }
+
+  // firebase Remote Data config
+
+  Future<String?> initConfig() async {
+    String? a;
+    try {
+      await remoteConfig.setConfigSettings(RemoteConfigSettings(
+        fetchTimeout: const Duration(seconds: 1),
+        minimumFetchInterval: const Duration(seconds: 5),
+      ));
+
+      _fetchConfig();
+      a = remoteConfig.getString("btn_text");
+      print(" a value from remote config: $a");
+      return a;
+    } catch (err) {
+      // throw err;
+      print(" a value from remote config1: $a");
+      print("error is :${err.toString()}");
+    }
+    return a;
+  }
+
+  void _fetchConfig() async {
+    await remoteConfig.fetchAndActivate();
   }
 }

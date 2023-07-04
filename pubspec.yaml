@@ -40,6 +40,10 @@ dependencies:
   firebase_core: ^2.14.0
   firebase_messaging: ^14.6.3
   flutter_local_notifications:
+  firebase_auth: ^4.6.3
+  cloud_firestore: ^4.8.1
+  firebase_remote_config: 
+  firebase_analytics: 
 
 dev_dependencies:
   flutter_test:
