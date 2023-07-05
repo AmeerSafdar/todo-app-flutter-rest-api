@@ -92,13 +92,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (_formKey.currentState!.validate()) {
                             bloc.add(LoginEvnts(emailCotroller.text,
                                 passwordController.text, context));
-                            if (state.status == LoginStatus.login) {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) =>
-                                          const HomeScreen())));
-                            }
+                            // if (state.status == LoginStatus.login) {
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: ((context) => const HomeScreen())),
+                                (Route<dynamic> route) => false);
+                            // }
                           }
                         },
                       ),

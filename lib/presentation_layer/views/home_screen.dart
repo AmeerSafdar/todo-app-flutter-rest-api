@@ -7,6 +7,8 @@ import 'package:fluttertodoapi/helper/constant/const.dart';
 import 'package:fluttertodoapi/helper/constant/dimensions.dart';
 import 'package:fluttertodoapi/helper/constant/string_helper.dart';
 import 'package:fluttertodoapi/presentation_layer/views/login_screen/loginScreen.dart';
+import 'package:fluttertodoapi/presentation_layer/views/update/update_user.dart';
+import 'package:fluttertodoapi/presentation_layer/widgets/sizedBox.dart';
 import 'package:fluttertodoapi/presentation_layer/widgets/text_widget.dart';
 
 import '../../bloc/get_data_bloc/fetch_data_bloc.dart';
@@ -28,11 +30,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    BlocProvider.of<FetchTodoBloc>(context).add(GetData());
+    BlocProvider.of<LoginBloc>(context).add(UserDataEvent());
     firebaseMessaging.getToken().then((tokenDev) {
       token = tokenDev.toString();
       debugPrint("token is: $token");
     });
-    BlocProvider.of<FetchTodoBloc>(context).add(GetData());
   }
 
   RenderObject? overlay;
@@ -60,8 +63,39 @@ class _HomeScreenState extends State<HomeScreen> {
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(
-        centerTitle: true,
-        title: MyTextWidget(text: StringHelper.TODOS_LIST),
+        centerTitle: false,
+        title: BlocBuilder<LoginBloc, LoginStates>(
+          builder: (context, state) {
+            return Row(
+              children: [
+                state.userModel != null
+                    ? GestureDetector(
+                        onTap: () {
+                          print("user model tapped");
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) => EditUser(
+                                        user: state.userModel!,
+                                      ))));
+                        },
+                        child: CircleAvatar(
+                          radius: 20,
+                          backgroundImage:
+                              NetworkImage(state.userModel!.photo!),
+                        ),
+                      )
+                    : CircleAvatar(
+                        radius: 20, backgroundImage: NetworkImage(userIMG)),
+                SizeBoxWidget(
+                  widths: 5,
+                ),
+                MyTextWidget(
+                    text: state.userModel?.name ?? StringHelper.TODOS_LIST),
+              ],
+            );
+          },
+        ),
         actions: [
           IconButton(
               onPressed: () {
@@ -96,7 +130,9 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: IconHelper.logOut)
         ],
       ),
-      body: SafeArea(child: BlocBuilder<FetchTodoBloc, FetchTodo>(
+      body: SafeArea(
+          //
+          child: BlocBuilder<FetchTodoBloc, FetchTodo>(
         builder: (context, state) {
           return RefreshIndicator(
             onRefresh: getData,

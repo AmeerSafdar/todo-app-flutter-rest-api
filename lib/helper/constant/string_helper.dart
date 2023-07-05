@@ -15,4 +15,7 @@ class StringHelper {
   static String VALIDITY = 'Enter a valid input';
   static String RESET_PASSWORD = 'Reset Password';
   static String FORGOT_PASSWORD = 'Forgot Password?';
+  static String PICK_FROM = 'Pick from';
+  static String GALLERY = 'Gallery';
+  static String CAMERA = 'Camera';
 }

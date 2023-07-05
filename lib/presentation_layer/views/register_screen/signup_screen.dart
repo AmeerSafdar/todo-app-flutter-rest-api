@@ -7,8 +7,11 @@ import "package:fluttertodoapi/helper/constant/dimensions.dart";
 import "package:fluttertodoapi/helper/constant/string_helper.dart";
 import "package:fluttertodoapi/helper/extension/validation_helper.dart";
 import "package:fluttertodoapi/presentation_layer/widgets/btn_widget.dart";
+import "package:image_picker/image_picker.dart";
 
 import "../../../bloc/login_methods_bloc.dart/login_bloc.dart";
+import "../../../helper/constant/const.dart";
+import "../../../helper/utils/dialogue_utils.dart";
 import "../../widgets/sizedBox.dart";
 import "../../widgets/text_field.dart";
 import "../home_screen.dart";
@@ -30,6 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+  ImageSource? imgSRC;
 
   @override
   void dispose() {
@@ -43,6 +47,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = BlocProvider.of<LoginBloc>(context);
     return Scaffold(
       body: Center(
         child: BlocBuilder<LoginBloc, LoginStates>(
@@ -54,6 +59,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        state.img == null
+                            ? CircleAvatar(
+                                radius: 50,
+                                backgroundImage: NetworkImage(userIMG))
+                            : CircleAvatar(
+                                radius: 50,
+                                backgroundImage: FileImage(state.img!),
+                              ),
+                        Positioned(
+                          bottom: 2,
+                          right: -6,
+                          child: IconButton(
+                              onPressed: () async {
+                                imgSRC = await showDialog(
+                                    context: context,
+                                    builder: (context) =>
+                                        DialogUtils.imagePickDialog(context));
+                                print("images source is $imgSRC");
+                                switch (imgSRC) {
+                                  case ImageSource.camera:
+                                    bloc.add(PickImagesEvent(imgSRC: imgSRC));
+                                    return;
+
+                                  case ImageSource.gallery:
+                                    bloc.add(PickImagesEvent(imgSRC: imgSRC));
+                                    return;
+                                  default:
+                                    break;
+                                }
+                              },
+                              icon: Icon(
+                                Icons.camera_alt_outlined,
+                                color: Colors.white,
+                              )),
+                        )
+                      ],
+                    ),
+                    SizeBoxWidget(
+                      heights: 20,
+                    ),
                     MyTextField(
                       hint: StringHelper.NAME,
                       cntrl: nameCNTRL,
@@ -96,13 +144,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ButtonWidget(
                                 btnText: "Register",
                                 press: () {
-                                  if (_formKey.currentState!.validate()) {
+                                  if (_formKey.currentState!.validate() &&
+                                      state.img != null) {
                                     BlocProvider.of<LoginBloc>(context).add(
                                         RegisterEvents(
                                             name: nameCNTRL.text,
                                             uName: userNameCNTRL.text,
                                             email: emailCntrl.text,
                                             password: passwordController.text,
+                                            img: state.img,
                                             context: context));
                                     // if (state.status == LoginStatus.login) {
                                     //   Navigator.pushAndRemoveUntil(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertodoapi/helper/constant/string_helper.dart';
 import 'package:fluttertodoapi/helper/extension/validation_helper.dart';
 import 'package:fluttertodoapi/presentation_layer/widgets/text_widget.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../presentation_layer/widgets/sizedBox.dart';
 import '../../presentation_layer/widgets/text_field.dart';
@@ -78,5 +79,30 @@ class DialogUtils {
             ),
           ),
         ])));
+  }
+
+  static imagePickDialog(BuildContext context) {
+    return AlertDialog(
+      title: MyTextWidget(text: StringHelper.PICK_FROM),
+      content: SingleChildScrollView(
+          child: Column(
+        children: <Widget>[
+          ListTile(
+            leading: Icon(Icons.camera_alt),
+            title: MyTextWidget(text: StringHelper.CAMERA),
+            onTap: () => Navigator.pop(context, ImageSource.camera),
+          ),
+          ListTile(
+            leading: Icon(Icons.camera),
+            title: MyTextWidget(text: StringHelper.GALLERY),
+            onTap: () => Navigator.pop(context, ImageSource.gallery),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: MyTextWidget(text: StringHelper.CANCEL),
+          ),
+        ],
+      )),
+    );
   }
 }
