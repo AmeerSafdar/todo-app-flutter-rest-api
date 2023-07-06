@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertodoapi/helper/utils/permission_utils.dart';
 import 'package:fluttertodoapi/model/user_model.dart';
 import 'package:fluttertodoapi/services/notification_helper/notifyHelper.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 TextEditingController titleUpdatecontroller = TextEditingController();
 TextEditingController desCUpdatecontroller = TextEditingController();
@@ -18,6 +19,7 @@ FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
 FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 final FirebaseAuth auth = FirebaseAuth.instance;
+final databaseReference = FirebaseDatabase.instance.ref();
 final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 
 String token = '';

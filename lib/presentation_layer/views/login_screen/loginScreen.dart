@@ -11,6 +11,7 @@ import 'package:fluttertodoapi/helper/constant/screen_percentage.dart';
 import 'package:fluttertodoapi/helper/constant/string_helper.dart';
 import 'package:fluttertodoapi/helper/extension/validation_helper.dart';
 import 'package:fluttertodoapi/presentation_layer/views/home_screen.dart';
+import 'package:fluttertodoapi/presentation_layer/views/phone_auth/phone_auth.dart';
 import 'package:fluttertodoapi/presentation_layer/views/register_screen/signup_screen.dart';
 import 'package:fluttertodoapi/presentation_layer/widgets/sizedBox.dart';
 import 'package:fluttertodoapi/presentation_layer/widgets/text_field.dart';
@@ -146,7 +147,20 @@ class _LoginScreenState extends State<LoginScreen> {
                               MaterialPageRoute(
                                   builder: ((context) => ResetPassword())));
                         },
-                        child: MyTextWidget(text: StringHelper.FORGOT_PASSWORD))
+                        child:
+                            MyTextWidget(text: StringHelper.FORGOT_PASSWORD)),
+
+                    SizeBoxWidget(),
+
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) => PhoneAuthScreen())));
+                        },
+                        child: MyTextWidget(text: StringHelper.VERIFY_PHONE)),
+
                     // BlocBuilder<FetchRemoteBlocData, RemoteConfigState>(
                     //   builder: (context, remState) {
                     //     if (remState.data == null) {

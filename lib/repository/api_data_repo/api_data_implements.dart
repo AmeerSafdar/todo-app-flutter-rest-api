@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:fluttertodoapi/helper/constant/const.dart';
 import 'package:fluttertodoapi/model/todos_model.dart';
@@ -52,6 +53,10 @@ class TodosFetch {
           },
         ),
       );
+
+      //add to firebase realtime
+
+      addRealtimeData(title, subTitle);
     } catch (e) {
       rethrow;
     }
@@ -122,5 +127,32 @@ class TodosFetch {
 
   void _fetchConfig() async {
     await remoteConfig.fetchAndActivate();
+  }
+
+  addRealtimeData(String title, String subTitle) {
+    try {
+      databaseReference
+          .child("devteam")
+          .set({"title": title, "subTitle": subTitle});
+    } catch (e) {
+      print(e.toString());
+    }
+
+    readData();
+  }
+
+  updateRealtimeData(String title, String subTitle) {
+    try {
+      databaseReference
+          .child("devteam")
+          .update({"title": title, "subTitle": subTitle});
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  void readData() async {
+    DatabaseEvent event = await databaseReference.once();
+    print("data is:${event.snapshot.value}");
   }
 }

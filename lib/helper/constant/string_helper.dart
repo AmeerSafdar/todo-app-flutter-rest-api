@@ -18,4 +18,7 @@ class StringHelper {
   static String PICK_FROM = 'Pick from';
   static String GALLERY = 'Gallery';
   static String CAMERA = 'Camera';
+  static String PHONE = "3000 xxxxx";
+  static String VERIFY_PHONE = 'Verify through phone';
+  static String SEND_CODE = 'Send Code';
 }

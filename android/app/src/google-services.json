@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "978469012552",
+    "firebase_url": "https://task2tecswivel-default-rtdb.firebaseio.com",
     "project_id": "task2tecswivel",
     "storage_bucket": "task2tecswivel.appspot.com"
   },
@@ -71,6 +72,43 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "978469012552-lrfkhqn750ojien073qulv42nudduobs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAApVcuVGIym-45FbgGWqx_W13m4o12-hA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "978469012552-lrfkhqn750ojien073qulv42nudduobs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978469012552:android:44c3f08ff8f8beca19847d",
+        "android_client_info": {
+          "package_name": "com.example.tak10"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "978469012552-p1sen063gsq4deqpb3ta67oh19h1nvvi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tak10",
+            "certificate_hash": "1dc94a072552406337a0347604368e7134d19260"
+          }
+        },
         {
           "client_id": "978469012552-lrfkhqn750ojien073qulv42nudduobs.apps.googleusercontent.com",
           "client_type": 3
