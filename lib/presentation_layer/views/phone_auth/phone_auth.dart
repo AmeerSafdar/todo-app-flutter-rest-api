@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertodoapi/helper/constant/string_helper.dart';
 import 'package:fluttertodoapi/helper/extension/validation_helper.dart';
+import 'package:fluttertodoapi/presentation_layer/views/phone_auth/verify_phone.dart';
 import 'package:fluttertodoapi/presentation_layer/widgets/btn_widget.dart';
 import 'package:fluttertodoapi/presentation_layer/widgets/sizedBox.dart';
 import 'package:fluttertodoapi/presentation_layer/widgets/text_field.dart';
@@ -65,9 +66,21 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                       await auth.verifyPhoneNumber(
                         phoneNumber: "$prefix${_phonecontroller.text}",
                         verificationCompleted:
-                            (PhoneAuthCredential credential) {},
-                        verificationFailed: (FirebaseAuthException e) {},
+                            (PhoneAuthCredential credential) {
+                          print("credential is ${credential.smsCode}");
+                        },
+                        verificationFailed: (FirebaseAuthException e) {
+                          print("verify failed: ${e.toString()}");
+                        },
                         codeSent: (String verificationId, int? resendToken) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) => VerifyPhoneNumber(
+                                        phoneNumber:
+                                            "$prefix${_phonecontroller.text}",
+                                        verificationID: verificationId,
+                                      ))));
                           print(
                               "code send is : $verificationId  \n token is $resendToken");
                         },

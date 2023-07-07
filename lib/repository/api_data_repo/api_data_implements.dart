@@ -126,7 +126,7 @@ class TodosFetch {
   }
 
   void _fetchConfig() async {
-    await remoteConfig.fetchAndActivate();
+    // await remoteConfig.fetchAndActivate();
   }
 
   addRealtimeData(String title, String subTitle) {

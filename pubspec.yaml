@@ -51,6 +51,8 @@ dependencies:
   firebase_database:
   country_code_picker: 
   flutter_localization: 
+  change_app_package_name:
+  pin_code_fields:
   flutter_native_splash: 
 
 dev_dependencies:

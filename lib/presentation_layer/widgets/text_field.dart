@@ -26,7 +26,7 @@ class MyTextField extends StatelessWidget {
       obscureText: obsecureTxt,
       decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(
-              vertical: Dimensions.D_3,
+              vertical: Dimensions.D_0,
               horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL),
           hintText: hint,
           border: OutlineInputBorder(
